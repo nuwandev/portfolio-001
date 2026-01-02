@@ -61,6 +61,7 @@ a {
   isolation: isolate;
   border-radius: 80px;
   border-bottom: 1px solid #cdcdcd;
+  overflow: hidden;
 }
 
 .hero::before {
@@ -72,8 +73,34 @@ a {
   background-size: cover;
   opacity: 0.6;
   pointer-events: none;
-  z-index: -1;
+  z-index: 0;
   border-radius: 80px;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(36, 36, 36, 0.03) 0%, transparent 70%);
+  border-radius: 50%;
+  top: -150px;
+  right: -150px;
+  z-index: 0;
+  pointer-events: none;
+  animation: float 8s ease-in-out infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-20px, 20px) scale(1.05);
+  }
 }
 
 nav {
@@ -85,27 +112,42 @@ nav {
 nav .logo {
   font-weight: bold;
   color: #1a1a1a;
-  transition: color .3s ease;
+  transition: color .3s ease, transform .3s ease;
+  position: relative;
+  z-index: 10;
 }
 
 nav .logo:hover {
   color: #000;
+  transform: scale(1.05);
+}
+
+nav .social-links {
+  position: relative;
+  z-index: 10;
 }
 
 nav .social-links a {
   margin-left: 5px;
-  transition: letter-spacing .3s ease-out, color .3s ease;
+  transition: letter-spacing .3s ease-out, color .3s ease, transform .3s ease;
+  display: inline-block;
 }
 
 nav .social-links a span {
   margin-left: 5px;
   font-weight: bolder;
   color: black;
+  transition: transform .3s ease;
 }
 
 nav .social-links a:hover {
   color: black;
   letter-spacing: 1px;
+  transform: translateY(-2px);
+}
+
+nav .social-links a:hover span {
+  transform: scale(1.2);
 }
 
 .hero .content {
@@ -130,11 +172,14 @@ nav .social-links a:hover {
   border-radius: 50%;
   filter: grayscale(100%);
   outline: 5px outset white;
-  transition: filter .7s ease;
+  transition: filter .7s ease, transform .5s ease, box-shadow .5s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .hero .content .profile-pic:hover {
   filter: grayscale(0%);
+  transform: scale(1.08) rotate(5deg);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
 }
 
 .hero .content .profile-pic:hover+.name-tag {
@@ -144,6 +189,8 @@ nav .social-links a:hover {
   top: 95%;
   left: 50%;
   transform: translate(-50%, -50%);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  animation: none;
 }
 
 .hero .content .name-tag {
@@ -155,11 +202,30 @@ nav .social-links a:hover {
   padding: 10px 20px;
   border-radius: 25px;
   white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: transform .5s ease,
     top .5s ease-out,
     left .5s ease,
     background .3s ease,
-    color .3s ease;
+    color .3s ease,
+    box-shadow .3s ease;
+  animation: wiggle 3s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+
+  0%,
+  100% {
+    transform: rotate(-12deg);
+  }
+
+  25% {
+    transform: rotate(-14deg);
+  }
+
+  75% {
+    transform: rotate(-10deg);
+  }
 }
 
 .hero .content h1 {
@@ -171,6 +237,21 @@ nav .social-links a:hover {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .btn {
@@ -180,13 +261,35 @@ nav .social-links a:hover {
   border-radius: 20px;
   font-size: 1.25rem;
   margin-top: .8rem;
-  transition: background-color .4s ease, color .4s ease, transform .3s ease;
+  transition: background-color .4s ease, color .4s ease, transform .3s ease, box-shadow .3s ease;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(36, 36, 36, 0.2);
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 20px;
+  transition: transform .4s ease;
+  z-index: -1;
 }
 
 .btn:hover {
-  background-color: white;
   color: #242424;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(36, 36, 36, 0.3);
+}
+
+.btn:hover::before {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .technologies {
@@ -255,25 +358,40 @@ nav .social-links a:hover {
 .slider .techs .icon {
   width: 1rem;
   flex: 0 0 3.5rem;
-  filter: grayscale(100%);
+  filter: grayscale(100%) brightness(0.9);
   cursor: pointer;
   transition: filter .6s ease, transform .3s ease-out;
+  position: relative;
 }
 
 .slider .techs .icon:hover {
-  filter: grayscale(0%);
-  transform: scale(1.3);
+  filter: grayscale(0%) brightness(1);
+  transform: scale(1.4) translateY(-8px);
+  animation: pulse 0.6s ease-in-out;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    filter: grayscale(0%) brightness(1);
+  }
+
+  50% {
+    filter: grayscale(0%) brightness(1.2);
+  }
 }
 
 .slider .techs .icon:hover+*,
 .slider .techs .icon:has(+ *:hover) {
-  filter: grayscale(50%);
-  transform: scale(1.05);
+  filter: grayscale(50%) brightness(0.95);
+  transform: scale(1.1) translateY(-4px);
 }
 
 .slider .techs .icon:hover+*+*,
 .slider .techs .icon:has(+*+*:hover) {
-  filter: grayscale(70%);
+  filter: grayscale(70%) brightness(0.92);
+  transform: scale(1.03);
 }
 
 @keyframes slide {
@@ -299,6 +417,7 @@ nav .social-links a:hover {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  gap: 4rem;
 }
 
 .about-me::before {
@@ -357,13 +476,14 @@ nav .social-links a:hover {
   border-radius: 16px;
   filter: grayscale(100%);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-  transition: filter .4s ease, transform .4s ease, box-shadow .4s ease;
+  transition: filter .6s ease, transform .5s ease, box-shadow .5s ease, border-radius .5s ease;
 }
 
 .about-image-container img:hover {
-  filter: grayscale(80%);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  filter: grayscale(0%);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  border-radius: 20px;
 }
 
 .about-badge {
@@ -403,6 +523,22 @@ nav .social-links a:hover {
   position: relative;
 }
 
+.about-content h2::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 50px;
+  height: 4px;
+  background: linear-gradient(90deg, #242424, transparent);
+  opacity: 0.3;
+  transition: width .4s ease;
+}
+
+.about-content:hover h2::after {
+  width: 80px;
+}
+
 .about-intro {
   font-size: 1rem;
   line-height: 1.7;
@@ -427,14 +563,16 @@ nav .social-links a:hover {
   display: flex;
   align-items: center;
   gap: 1.2rem;
-  padding: 0;
+  padding: 1rem;
   background: transparent;
   border: none;
-  transition: transform .3s ease;
+  border-radius: 12px;
+  transition: transform .3s ease, background .3s ease;
 }
 
 .highlight-item:hover {
-  transform: translateX(3px);
+  transform: translateX(8px);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .highlight-icon {
@@ -442,12 +580,13 @@ nav .social-links a:hover {
   line-height: 1;
   filter: grayscale(100%);
   opacity: 0.7;
-  transition: transform .3s ease, opacity .3s ease;
+  transition: transform .3s ease, opacity .3s ease, filter .3s ease;
 }
 
 .highlight-item:hover .highlight-icon {
-  transform: scale(1.15);
-  opacity: 0.9;
+  transform: scale(1.25) rotate(5deg);
+  opacity: 1;
+  filter: grayscale(0%);
 }
 
 .highlight-text {
