@@ -69,12 +69,13 @@ a {
 .hero {
   position: relative;
   background-color: #f0f0f0;
-  /* height: calc(100vh - 6rem); */
   height: 640px;
   isolation: isolate;
   border-radius: 80px;
   border-bottom: 1px solid #cdcdcd;
   overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .hero::before {
@@ -102,6 +103,8 @@ a {
   z-index: 0;
   pointer-events: none;
   animation: float 8s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 @keyframes float {
@@ -142,25 +145,30 @@ nav .social-links {
 
 nav .social-links a {
   margin-left: 5px;
-  transition: letter-spacing .3s ease-out, color .3s ease, transform .3s ease;
+  transition: letter-spacing .3s ease,
+    color .3s ease,
+    transform .3s ease;
   display: inline-block;
+  transform: translateY(0);
 }
 
 nav .social-links a span {
   margin-left: 5px;
   font-weight: bolder;
   color: black;
-  transition: transform .3s ease;
+  transition: transform .3s ease,
+    color .3s ease;
+  display: inline-block;
+  transform: scale(1) rotate(0deg);
 }
 
 nav .social-links a:hover {
   color: black;
-  letter-spacing: 1px;
-  transform: translateY(-2px);
+  letter-spacing: 1.5px;
 }
 
 nav .social-links a:hover span {
-  transform: scale(1.2);
+  transform: scale(1.25) rotate(5deg);
 }
 
 .hero .content {
@@ -185,14 +193,22 @@ nav .social-links a:hover span {
   border-radius: 50%;
   filter: grayscale(100%);
   outline: 5px outset white;
-  transition: filter .7s ease, transform .5s ease, box-shadow .5s ease;
+  transition: filter .6s cubic-bezier(0.4, 0, 0.2, 1),
+    transform .6s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow .5s cubic-bezier(0.4, 0, 0.2, 1),
+    outline .4s ease;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  will-change: transform, filter;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .hero .content .profile-pic:hover {
   filter: grayscale(0%);
-  transform: scale(1.08) rotate(5deg);
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  transform: scale(1.1) rotate(8deg) translateZ(0);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  outline: 6px outset white;
 }
 
 .hero .content .profile-pic:hover+.name-tag {
@@ -201,8 +217,8 @@ nav .social-links a:hover span {
   color: white;
   top: 95%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  transform: translate(-50%, -50%) rotate(0deg) translateZ(0);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   animation: none;
 }
 
@@ -210,7 +226,7 @@ nav .social-links a:hover span {
   position: absolute;
   top: 15%;
   left: 70%;
-  transform: rotate(-12deg);
+  transform: rotate(-12deg) translateZ(0);
   background-color: white;
   padding: 10px 20px;
   border-radius: 25px;
@@ -223,21 +239,22 @@ nav .social-links a:hover span {
     color .3s ease,
     box-shadow .3s ease;
   animation: wiggle 3s ease-in-out infinite;
+  will-change: transform;
 }
 
 @keyframes wiggle {
 
   0%,
   100% {
-    transform: rotate(-12deg);
+    transform: rotate(-12deg) translateZ(0);
   }
 
   25% {
-    transform: rotate(-14deg);
+    transform: rotate(-14deg) translateZ(0);
   }
 
   75% {
-    transform: rotate(-10deg);
+    transform: rotate(-10deg) translateZ(0);
   }
 }
 
@@ -253,6 +270,8 @@ nav .social-links a:hover span {
   position: relative;
   z-index: 1;
   animation: fadeInUp 1s ease-out;
+  will-change: opacity, transform;
+  transform: translateZ(0);
 }
 
 @keyframes fadeInUp {
@@ -279,6 +298,8 @@ nav .social-links a:hover span {
   z-index: 1;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(36, 36, 36, 0.2);
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .btn::before {
@@ -408,6 +429,8 @@ nav .social-links a:hover span {
   padding: 5rem 0 6rem 0;
   gap: 3rem;
   animation: slide 90s infinite linear;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 @media (max-width: 768px) {
@@ -429,8 +452,10 @@ nav .social-links a:hover span {
   flex: 0 0 3.5rem;
   filter: grayscale(100%) brightness(0.9);
   cursor: pointer;
-  transition: filter .6s ease, transform .3s ease-out;
+  transition: filter .3s ease,
+    transform .3s ease;
   position: relative;
+  transform: scale(1) translateY(0);
 }
 
 @media (max-width: 768px) {
@@ -446,42 +471,33 @@ nav .social-links a:hover span {
 }
 
 .slider .techs .icon:hover {
-  filter: grayscale(0%) brightness(1);
-  transform: scale(1.4) translateY(-8px);
-  animation: pulse 0.6s ease-in-out;
-}
-
-@keyframes pulse {
-
-  0%,
-  100% {
-    filter: grayscale(0%) brightness(1);
-  }
-
-  50% {
-    filter: grayscale(0%) brightness(1.2);
-  }
+  filter: grayscale(0%) brightness(1.05);
+  transform: scale(1.35) translateY(-8px);
 }
 
 .slider .techs .icon:hover+*,
 .slider .techs .icon:has(+ *:hover) {
   filter: grayscale(50%) brightness(0.95);
-  transform: scale(1.1) translateY(-4px);
+  transform: scale(1.1) translateY(-3px);
+  transition: filter .3s ease,
+    transform .3s ease;
 }
 
 .slider .techs .icon:hover+*+*,
 .slider .techs .icon:has(+*+*:hover) {
   filter: grayscale(70%) brightness(0.92);
-  transform: scale(1.03);
+  transform: scale(1.05) translateY(0);
+  transition: filter .3s ease,
+    transform .3s ease;
 }
 
 @keyframes slide {
   from {
-    transform: translateX(0);
+    transform: translateX(0) translateZ(0);
   }
 
   to {
-    transform: translateX(-100%);
+    transform: translateX(-100%) translateZ(0);
   }
 }
 
@@ -613,6 +629,8 @@ nav .social-links a:hover span {
   filter: grayscale(100%);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   transition: filter .6s ease, transform .5s ease, box-shadow .5s ease, border-radius .5s ease;
+  will-change: transform, filter;
+  transform: translateZ(0);
 }
 
 .about-image-container img:hover {
@@ -832,6 +850,8 @@ nav .social-links a:hover span {
   border: 1px solid rgba(0, 0, 0, 0.05);
   transition: transform .4s ease, box-shadow .4s ease;
   overflow: hidden;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .project-card::before {
@@ -993,7 +1013,61 @@ nav .social-links a:hover span {
    RESPONSIVE DESIGN - MEDIA QUERIES
    ============================================ */
 
-/* Tablet - Large devices (landscape tablets, 768px to 1024px) */
+/* Large tablets and small laptops (1024px to 1280px) */
+@media (max-width: 1280px) {
+  .container {
+    max-width: 95%;
+    margin: 2rem auto;
+  }
+
+  .hero {
+    height: 600px;
+  }
+
+  nav {
+    padding: 1.75rem 3.5rem 1rem 3.5rem;
+  }
+
+  .hero .content {
+    margin-top: -4rem;
+  }
+
+  .hero .content .profile-pic {
+    width: 125px;
+  }
+
+  .hero .content h1 {
+    font-size: 2.75rem;
+    max-width: 425px;
+  }
+
+}
+
+/* Medium laptops (900px to 1024px) */
+@media (max-width: 900px) {
+  .hero {
+    height: 520px;
+  }
+
+  nav {
+    padding: 1.4rem 2.25rem 0.9rem 2.25rem;
+  }
+
+  .hero .content {
+    margin-top: -3rem;
+  }
+
+  .hero .content .profile-pic {
+    width: 110px;
+  }
+
+  .hero .content h1 {
+    font-size: 2.3rem;
+    max-width: 380px;
+  }
+}
+
+/* Tablet landscape (768px to 1024px) */
 @media (max-width: 1024px) {
   .container {
     margin: 2rem 1rem;
@@ -1007,324 +1081,564 @@ nav .social-links a:hover span {
 
   .hero {
     border-radius: 50px;
+    height: 540px;
   }
 
   nav {
-    padding: 2rem 2rem 1rem 2rem;
-  }
-
-  .hero .content h1 {
-    font-size: 2.5rem;
-    max-width: 400px;
-  }
-
-  .projects {
-    padding: 4rem 2rem;
-  }
-}
-
-/* Tablet - Medium devices (portrait tablets and large phones, 600px to 768px) */
-@media (max-width: 768px) {
-  .container {
-    margin: 1rem 0.5rem;
-    border-radius: 30px;
-  }
-
-  .container::before,
-  .hero::before {
-    border-radius: 30px;
-  }
-
-  .hero {
-    height: auto;
-    min-height: 500px;
-    border-radius: 30px;
-  }
-
-  nav {
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1.5rem 1.5rem 1rem 1.5rem;
-    text-align: center;
-  }
-
-  nav .social-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-
-  nav .social-links a {
-    margin-left: 0;
-    font-size: 0.9rem;
-  }
-
-  .hero .content {
-    margin-top: -2rem;
-    padding: 0 1rem;
-  }
-
-  .hero .content .profile-pic {
-    width: 110px;
-  }
-
-  .hero .content h1 {
-    font-size: 2rem;
-    max-width: 350px;
-  }
-
-  .btn {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-  }
-
-  /* About Me Section */
-  .about-image-container {
-    width: 100%;
-    max-width: 280px;
-    margin: 0 auto;
-  }
-
-  .about-image-container img {
-    max-width: 100%;
-  }
-
-  .about-content {
-    width: 100%;
-  }
-
-  .about-content h2 {
-    font-size: 2rem;
-  }
-
-  .about-content h2::after {
-    left: 0;
-  }
-
-  /* Projects Section */
-  .projects {
-    padding: 3rem 1.5rem;
-  }
-
-  .section-title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-  }
-}
-
-/* Mobile - Small devices (phones, 600px and down) */
-@media (max-width: 600px) {
-  body {
-    font-size: 14px;
-  }
-
-  .container {
-    margin: 0.5rem;
-    border-radius: 20px;
-  }
-
-  .container::before,
-  .hero::before {
-    border-radius: 20px;
-  }
-
-  .hero {
-    height: auto;
-    min-height: 450px;
-    border-radius: 20px;
-  }
-
-  nav {
-    padding: 1rem;
+    padding: 1.5rem 2.5rem 1rem 2.5rem;
   }
 
   nav .logo {
-    font-size: 1rem;
+    font-size: 1.05rem;
   }
 
   nav .social-links a {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 
   .hero .content {
-    margin-top: -1rem;
-    padding: 0 1rem;
-    gap: 0.8rem;
+    margin-top: -3.5rem;
+    gap: 1.1rem;
+  }
+
+  .hero .content h1 {
+    font-size: 2.4rem;
+    max-width: 390px;
+    line-height: 1.2;
   }
 
   .hero .content .profile-pic {
-    width: 90px;
-    outline-width: 3px;
+    width: 115px;
   }
 
   .hero .content .name-tag {
-    font-size: 0.85rem;
-    padding: 8px 15px;
-  }
-
-  .hero .content h1 {
-    font-size: 1.5rem;
-    max-width: 280px;
-    line-height: 1.3;
-  }
-
-  .btn {
-    font-size: 0.9rem;
-    padding: 0.4rem 0.9rem;
-    margin-top: 0.5rem;
-  }
-
-  /* About Me Section */
-  .about-image-container {
-    max-width: 220px;
-  }
-
-  .about-badge {
-    font-size: 0.75rem;
-    padding: 0.4rem 0.8rem;
-  }
-
-  .about-content h2 {
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
-  }
-
-  .about-intro {
     font-size: 0.95rem;
-    line-height: 1.6;
+    padding: 9px 18px;
+
+    .section-title {
+      font-size: 2.5rem;
+    }
   }
 
-  .highlight-item {
-    padding: 1rem;
+  /* Tablet portrait (600px to 768px) */
+  @media (max-width: 768px) {
+    .container {
+      margin: 1.5rem 0.75rem;
+      border-radius: 40px;
+    }
+
+    .container::before,
+    .hero::before {
+      border-radius: 40px;
+    }
+
+    .hero {
+      height: 500px;
+      border-radius: 40px;
+    }
+
+    nav {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 2rem 0.75rem 2rem;
+    }
+
+    nav .logo {
+      font-size: 1.05rem;
+    }
+
+    nav .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    nav .social-links a {
+      margin-left: 0;
+      font-size: 0.85rem;
+    }
+
+    .hero .content {
+      margin-top: -2.5rem;
+      padding: 0 1.5rem;
+      gap: 0.95rem;
+    }
+
+    .hero .content .profile-pic {
+      width: 105px;
+      outline-width: 4px;
+    }
+
+    .hero .content .name-tag {
+      font-size: 0.9rem;
+      padding: 8px 16px;
+    }
+
+    .hero .content h1 {
+      font-size: 2.1rem;
+      max-width: 360px;
+    }
+
+    .btn {
+      font-size: 1rem;
+      padding: 0.5rem 1.1rem;
+    }
+
+    /* About Me Section */
+    .about-image-container {
+      width: 100%;
+      max-width: 260px;
+      margin: 0 auto;
+    }
+
+    .about-content {
+      width: 100%;
+      align-items: center;
+      text-align: center;
+    }
+
+    .about-content h2 {
+      font-size: 2.2rem;
+    }
+
+    .about-content h2::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .about-intro {
+      max-width: 100%;
+    }
+
+    /* Projects Section */
+    .projects {
+      padding: 3.5rem 2rem;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .project-card {
+      padding: 2rem;
+    }
   }
 
-  .highlight-icon {
-    font-size: 1.5rem;
+  /* Mobile devices (480px to 600px) */
+  @media (max-width: 600px) {
+    body {
+      font-size: 15px;
+    }
+
+    .container {
+      margin: 1rem 0.5rem;
+      border-radius: 30px;
+    }
+
+    .container::before,
+    .hero::before {
+      border-radius: 30px;
+    }
+
+    .hero {
+      height: 460px;
+      border-radius: 30px;
+    }
+
+    nav {
+      padding: 1.1rem 1.5rem 0.6rem 1.5rem;
+      gap: 0.9rem;
+    }
+
+    nav .logo {
+      font-size: 0.98rem;
+    }
+
+    nav .social-links a {
+      font-size: 0.8rem;
+    }
+
+    nav .social-links a span {
+      display: none;
+    }
+
+    .hero .content {
+      margin-top: -1.8rem;
+      padding: 0 1.25rem;
+      gap: 0.85rem;
+    }
+
+    .hero .content .profile-pic {
+      width: 98px;
+      outline-width: 3px;
+    }
+
+    .hero .content .name-tag {
+      font-size: 0.85rem;
+      padding: 7px 14px;
+      top: 18%;
+      left: 68%;
+    }
+
+    .hero .content h1 {
+      font-size: 1.7rem;
+      max-width: 310px;
+    }
+
+    .btn {
+      font-size: 0.95rem;
+      padding: 0.45rem 1rem;
+      margin-top: 0.6rem;
+    }
+
+    /* About Me Section */
+    .about-image-container {
+      max-width: 240px;
+    }
+
+    .about-image-container img {
+      border-radius: 14px;
+    }
+
+    .about-badge {
+      font-size: 0.75rem;
+      padding: 0.45rem 0.9rem;
+      bottom: -10px;
+    }
+
+    .about-content h2 {
+      font-size: 1.9rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .about-intro {
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .highlight-item {
+      padding: 0.9rem;
+    }
+
+    .highlight-icon {
+      font-size: 1.6rem;
+    }
+
+    .highlight-text strong {
+      font-size: 0.95rem;
+    }
+
+    .highlight-text span {
+      font-size: 0.88rem;
+    }
+
+    /* Projects Section */
+    .projects {
+      padding: 2.5rem 1.25rem;
+    }
+
+    .section-title {
+      font-size: 1.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .project-card {
+      padding: 1.75rem 1.5rem;
+    }
+
+    .project-number {
+      font-size: 2.8rem;
+      top: 1rem;
+      right: 1rem;
+    }
+
+    .project-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .project-description {
+      font-size: 0.92rem;
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-tech {
+      gap: 0.55rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .tech-tag {
+      padding: 0.4rem 0.85rem;
+      font-size: 0.78rem;
+    }
+
+    .project-link {
+      padding: 0.55rem 1.3rem;
+      font-size: 0.88rem;
+    }
   }
 
-  .highlight-text strong {
-    font-size: 0.95rem;
+  /* Small mobile devices (320px to 480px) */
+  @media (max-width: 480px) {
+    body {
+      font-size: 14px;
+    }
+
+    .container {
+      margin: 0.75rem 0.4rem;
+      border-radius: 24px;
+    }
+
+    .container::before,
+    .hero::before {
+      border-radius: 24px;
+    }
+
+    .hero {
+      height: 410px;
+      border-radius: 24px;
+    }
+
+    nav {
+      padding: 0.9rem 1.2rem 0.5rem 1.2rem;
+    }
+
+    nav .logo {
+      font-size: 0.92rem;
+    }
+
+    nav .social-links a {
+      font-size: 0.75rem;
+    }
+
+    .hero .content {
+      margin-top: -1.3rem;
+      padding: 0 1rem;
+      gap: 0.7rem;
+    }
+
+    .hero .content .profile-pic {
+      width: 88px;
+    }
+
+    .hero .content .name-tag {
+      font-size: 0.78rem;
+      padding: 6px 12px;
+      top: 20%;
+      left: 66%;
+    }
+
+    .hero .content h1 {
+      font-size: 1.45rem;
+      max-width: 270px;
+      line-height: 1.28;
+    }
+
+    .btn {
+      font-size: 0.88rem;
+      padding: 0.4rem 0.9rem;
+    }
+
+    .about-image-container {
+      max-width: 200px;
+    }
+
+    .about-image-container img {
+      border-radius: 12px;
+    }
+
+    .about-badge {
+      font-size: 0.7rem;
+      padding: 0.4rem 0.8rem;
+    }
+
+    .about-content h2 {
+      font-size: 1.65rem;
+    }
+
+    .about-intro {
+      font-size: 0.9rem;
+    }
+
+    .highlight-item {
+      padding: 0.8rem;
+    }
+
+    .highlight-icon {
+      font-size: 1.4rem;
+    }
+
+    .highlight-text strong {
+      font-size: 0.9rem;
+    }
+
+    .highlight-text span {
+      font-size: 0.82rem;
+    }
+
+    .projects {
+      padding: 2rem 1rem;
+    }
+
+    .section-title {
+      font-size: 1.65rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .project-card {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .project-number {
+      font-size: 2.5rem;
+      top: 0.85rem;
+      right: 0.85rem;
+    }
+
+    .project-title {
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-description {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-bottom: 1.1rem;
+    }
+
+    .tech-tag {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.72rem;
+    }
+
+    .project-link {
+      padding: 0.5rem 1.15rem;
+      font-size: 0.82rem;
+    }
   }
 
-  .highlight-text span {
-    font-size: 0.85rem;
+  /* Extra small devices (320px and below) */
+  @media (max-width: 360px) {
+    .container {
+      margin: 0.5rem 0.3rem;
+      border-radius: 20px;
+    }
+
+    .container::before,
+    .hero::before {
+      border-radius: 20px;
+    }
+
+    .hero {
+      border-radius: 20px;
+      height: 370px;
+    }
+
+    nav {
+      padding: 0.8rem 1rem 0.4rem 1rem;
+    }
+
+    nav .logo {
+      font-size: 0.88rem;
+    }
+
+    .hero .content {
+      margin-top: -1rem;
+      gap: 0.6rem;
+    }
+
+    .hero .content h1 {
+      font-size: 1.3rem;
+      max-width: 240px;
+      line-height: 1.3;
+    }
+
+    .hero .content .profile-pic {
+      width: 78px;
+      outline-width: 2px;
+    }
+
+    .hero .content .name-tag {
+      font-size: 0.72rem;
+      padding: 6px 11px;
+      top: 22%;
+    }
+
+    .about-content h2 {
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+    }
+
+    .project-title {
+      font-size: 1.2rem;
+    }
+
+    .project-number {
+      font-size: 2.2rem;
+    }
   }
 
-  /* Projects Section */
-  .projects {
-    padding: 2rem 1rem;
+  /* Landscape orientation adjustments for mobile devices */
+  @media (max-width: 900px) and (orientation: landscape) {
+    .hero {
+      height: 360px;
+    }
+
+    nav {
+      padding: 0.8rem 2rem 0.5rem 2rem;
+      gap: 0.7rem;
+    }
+
+    .hero .content {
+      margin-top: -0.8rem;
+      gap: 0.6rem;
+      padding: 0 1.5rem;
+    }
+
+    .hero .content .profile-pic {
+      width: 75px;
+      outline-width: 3px;
+    }
+
+    .hero .content .name-tag {
+      font-size: 0.75rem;
+      padding: 6px 12px;
+    }
+
+    .hero .content h1 {
+      font-size: 1.5rem;
+      max-width: 300px;
+      line-height: 1.25;
+    }
+
+    .btn {
+      font-size: 0.82rem;
+      padding: 0.38rem 0.85rem;
+      min-height: auto;
+      padding: 3rem 2rem;
+    }
+
+    .projects {
+      padding: 3rem 2rem;
+    }
   }
 
-  .section-title {
-    font-size: 1.75rem;
-    margin-bottom: 1.5rem;
-  }
+  /* Reduce animations on devices with reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
 
-  .project-card {
-    padding: 1.75rem;
-  }
-
-  .project-number {
-    font-size: 2.5rem;
-    top: 1rem;
-    right: 1rem;
-  }
-
-  .project-title {
-    font-size: 1.4rem;
-    margin-bottom: 0.8rem;
-  }
-
-  .project-description {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin-bottom: 1.2rem;
-  }
-
-  .project-tech {
-    gap: 0.5rem;
-    margin-bottom: 1.2rem;
-  }
-
-  .tech-tag {
-    padding: 0.35rem 0.75rem;
-    font-size: 0.75rem;
-  }
-
-  .project-link {
-    padding: 0.5rem 1.2rem;
-    font-size: 0.85rem;
-  }
-}
-
-/* Extra Small Devices (very small phones, 400px and down) */
-@media (max-width: 400px) {
-  .container {
-    margin: 0.25rem;
-    border-radius: 15px;
-  }
-
-  .container::before,
-  .hero::before {
-    border-radius: 15px;
-  }
-
-  .hero {
-    border-radius: 15px;
-    min-height: 400px;
-  }
-
-  .hero .content h1 {
-    font-size: 1.3rem;
-    max-width: 250px;
-  }
-
-  .hero .content .profile-pic {
-    width: 80px;
-  }
-
-  nav .social-links {
-    font-size: 0.75rem;
-  }
-
-  .about-content h2 {
-    font-size: 1.5rem;
-  }
-
-  .section-title {
-    font-size: 1.5rem;
-  }
-
-  .project-card {
-    padding: 1.5rem;
-  }
-
-  .project-title {
-    font-size: 1.25rem;
-  }
-
-  .project-number {
-    font-size: 2rem;
-  }
-}
-
-/* Landscape orientation adjustments for mobile devices */
-@media (max-width: 900px) and (orientation: landscape) {
-  .hero {
-    height: auto;
-    min-height: 400px;
-  }
-
-  .hero .content {
-    margin-top: -1rem;
-  }
-
-  .hero .content .profile-pic {
-    width: 90px;
-  }
-
-  .hero .content h1 {
-    font-size: 1.8rem;
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
