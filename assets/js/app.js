@@ -9,16 +9,26 @@ document.addEventListener("DOMContentLoaded", function () {
   const MAX_SCALE = 1.6;
   const PROXIMITY = 150; // px
 
+  let isOver = false;
+  slider.addEventListener("mouseenter", () => {
+    isOver = true;
+  });
+  slider.addEventListener("mouseleave", () => {
+    isOver = false;
+    icons.forEach((icon) => {
+      gsap.to(icon, { scale: 1, y: 0, duration: 0.5, overwrite: "auto" });
+      icon.classList.remove("active");
+    });
+  });
   slider.addEventListener("mousemove", (e) => {
+    if (!isOver) return;
     const mouseX = e.clientX;
     const mouseY = e.clientY;
-
     icons.forEach((icon) => {
       const rect = icon.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       const distance = Math.hypot(mouseX - centerX, mouseY - centerY);
-
       if (distance < PROXIMITY) {
         const power = (PROXIMITY - distance) / PROXIMITY;
         const scale = 1 + (MAX_SCALE - 1) * power;
