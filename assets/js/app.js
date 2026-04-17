@@ -72,7 +72,7 @@ circles.forEach(function (circle, index) {
   circle.style.backgroundColor = "rgba(36, 36, 36, 0.5)";
 });
 
-window.addEventListener("mousemove", function (e) {
+globalThis.addEventListener("mousemove", function (e) {
   coords.x = e.clientX;
   coords.y = e.clientY;
 });
@@ -99,3 +99,22 @@ function animateCircles() {
 }
 
 animateCircles();
+
+const container = document.querySelector(".hero .content > div");
+const tag = document.querySelector(".name-tag__text");
+
+container.addEventListener("mousemove", (e) => {
+  const rect = container.getBoundingClientRect();
+  const x = (e.clientX - rect.left) / rect.width - 0.5;
+  const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+  tag.style.transform = `
+    rotate(${x * 10}deg)
+    translate(${x * 6}px, ${y * 6}px)
+    scale(1.04)
+  `;
+});
+
+container.addEventListener("mouseleave", () => {
+  tag.style.transform = "rotate(0deg) translate(0,0) scale(1)";
+});
