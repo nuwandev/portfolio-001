@@ -176,12 +176,6 @@ nav .social-links a:hover span {
   z-index: 1;
 }
 
-.hero .content > div {
-  position: relative;
-  cursor: help;
-  width: max-content;
-}
-
 .hero .content .profile-pic {
   width: 130px;
   border-radius: 50%;
@@ -206,50 +200,69 @@ nav .social-links a:hover span {
   outline: 6px outset white;
 }
 
-.hero .content .profile-pic:hover + .name-tag {
-  pointer-events: none;
-  background: black;
-  color: white;
-  top: 95%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(0deg) translateZ(0);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  animation: none;
+.hero .content > div {
+  position: relative;
+  cursor: help;
+  width: max-content;
+  display: inline-block;
 }
 
 .hero .content .name-tag {
   position: absolute;
   top: 15%;
   left: 70%;
-  transform: rotate(-12deg) translateZ(0);
-  background-color: white;
+  z-index: 2;
+  transform: translate3d(0, 0, 0);
+  transition:
+    top 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    left 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: top, left, transform;
+  pointer-events: none;
+}
+
+.hero .content .name-tag__text {
+  display: block;
   padding: 10px 20px;
   border-radius: 25px;
   white-space: nowrap;
+  background: #fff;
+  color: #111;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition:
-    transform 0.5s ease,
-    top 0.5s ease-out,
-    left 0.5s ease,
-    background 0.3s ease,
-    color 0.3s ease,
-    box-shadow 0.3s ease;
+  transform-origin: center;
   animation: wiggle 3s ease-in-out infinite;
+  transition:
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease;
   will-change: transform;
+}
+
+.hero .content > div:hover .name-tag {
+  top: 95%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.hero .content > div:hover .name-tag__text {
+  animation: none;
+  transform: rotate(0deg) scale(1.04);
+  background: #000;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes wiggle {
   0%,
   100% {
-    transform: rotate(-12deg) translateZ(0);
+    transform: rotate(-12deg);
   }
-
   25% {
-    transform: rotate(-14deg) translateZ(0);
+    transform: rotate(-14deg);
   }
-
   75% {
-    transform: rotate(-10deg) translateZ(0);
+    transform: rotate(-10deg);
   }
 }
 
