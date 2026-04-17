@@ -1,6 +1,4 @@
-// --- Dynamic Tech Icon Track & Circles ---
 document.addEventListener("DOMContentLoaded", function () {
-  // Tech icons
   const techIcons = [
     { src: "assets/imgs/icons/typescript.svg", alt: "TypeScript" },
     { src: "assets/imgs/icons/javascript.svg", alt: "JavaScript" },
@@ -25,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (techTrack) {
     techTrack.innerHTML = "";
     for (let i = 0; i < 2; i++) {
-      // duplicate for infinite scroll effect
       const techsDiv = document.createElement("div");
       techsDiv.className = "techs";
       techIcons.forEach((icon) => {
