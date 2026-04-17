@@ -110,58 +110,168 @@ a {
 
 nav {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 2rem 4rem 1rem 4rem;
+  padding: 1.7rem 3rem 1rem;
+  position: relative;
+}
+
+nav::after {
+  content: "";
+  position: absolute;
+  left: 3rem;
+  right: 3rem;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(36, 36, 36, 0.14),
+    transparent
+  );
 }
 
 nav .logo {
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.03em;
   color: #1a1a1a;
-  transition:
-    color 0.3s ease,
-    transform 0.3s ease;
   position: relative;
-  z-index: 10;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+nav .logo::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background: #1a1a1a;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.28s ease;
+  opacity: 0.25;
 }
 
 nav .logo:hover {
-  color: #000;
-  transform: scale(1.05);
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+nav .logo:hover::after {
+  transform: scaleX(1);
 }
 
 nav .social-links {
-  position: relative;
-  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
 }
 
 nav .social-links a {
-  margin-left: 5px;
-  transition:
-    letter-spacing 0.3s ease,
-    color 0.3s ease,
-    transform 0.3s ease;
-  display: inline-block;
-  transform: translateY(0);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.9rem;
+  color: #4a4a4a;
+  transition: color 0.22s ease, transform 0.22s ease, opacity 0.22s ease;
+}
+
+nav .social-links a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: #1a1a1a;
+  transform: translateX(-50%);
+  transition: width 0.25s ease;
+  opacity: 0.22;
 }
 
 nav .social-links a span {
-  margin-left: 5px;
-  font-weight: bolder;
-  color: black;
-  transition:
-    transform 0.3s ease,
-    color 0.3s ease;
-  display: inline-block;
-  transform: scale(1) rotate(0deg);
+  margin-left: 0.25rem;
+  color: rgba(36, 36, 36, 0.28);
+  transition: transform 0.22s ease, opacity 0.22s ease;
 }
 
 nav .social-links a:hover {
-  color: black;
-  letter-spacing: 1.5px;
+  color: #1a1a1a;
+  transform: translateY(-1px);
+}
+
+nav .social-links a:hover::after {
+  width: 58%;
 }
 
 nav .social-links a:hover span {
-  transform: scale(1.25) rotate(5deg);
+  transform: translateX(2px);
+  opacity: 0.55;
+}
+
+nav .social-links:hover a {
+  opacity: 0.45;
+}
+
+nav .social-links a:hover {
+  opacity: 1;
+}
+
+nav .logo:focus-visible,
+nav .social-links a:focus-visible {
+  outline: 2px solid #242424;
+  outline-offset: 3px;
+}
+
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.1rem 1.4rem 0.8rem;
+  }
+
+  nav::after {
+    left: 1.4rem;
+    right: 1.4rem;
+  }
+
+  nav .social-links {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.05rem;
+  }
+
+  nav .social-links a {
+    padding: 0.25rem 0.45rem;
+    font-size: 0.84rem;
+  }
+}
+
+@media (max-width: 480px) {
+  nav {
+    padding: 0.95rem 1rem 0.7rem;
+  }
+
+  nav::after {
+    left: 1rem;
+    right: 1rem;
+  }
+
+  nav .logo {
+    font-size: 0.92rem;
+  }
+
+  nav .social-links a {
+    font-size: 0.76rem;
+    padding: 0.2rem 0.35rem;
+  }
+
+  nav .social-links a span {
+    display: none;
+  }
 }
 
 .hero .content {
