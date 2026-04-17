@@ -1,3 +1,44 @@
+// --- Dynamic Tech Icon Track ---
+const techIcons = [
+  { src: "assets/imgs/icons/typescript.svg", alt: "TypeScript" },
+  { src: "assets/imgs/icons/javascript.svg", alt: "JavaScript" },
+  { src: "assets/imgs/icons/java.svg", alt: "Java" },
+  { src: "assets/imgs/icons/spring.svg", alt: "Spring" },
+  { src: "assets/imgs/icons/nodejs.svg", alt: "Node.js" },
+  { src: "assets/imgs/icons/express.svg", alt: "Express.js" },
+  { src: "assets/imgs/icons/react.svg", alt: "React" },
+  { src: "assets/imgs/icons/nextjs.svg", alt: "Next.js" },
+  { src: "assets/imgs/icons/tailwind.svg", alt: "Tailwind CSS" },
+  { src: "assets/imgs/icons/mongodb.svg", alt: "MongoDB" },
+  { src: "assets/imgs/icons/mysql.svg", alt: "MySQL" },
+  { src: "assets/imgs/icons/postgresql.svg", alt: "PostgreSQL" },
+  { src: "assets/imgs/icons/git.svg", alt: "Git" },
+  { src: "assets/imgs/icons/github.svg", alt: "GitHub" },
+  { src: "assets/imgs/icons/postman.svg", alt: "Postman" },
+  { src: "assets/imgs/icons/figma.svg", alt: "Figma" },
+  { src: "assets/imgs/icons/html5.svg", alt: "HTML5" },
+  { src: "assets/imgs/icons/css3.svg", alt: "CSS3" }
+];
+
+function renderTechTrack() {
+  const techTrack = document.getElementById("techTrack");
+  if (!techTrack) return;
+  techTrack.innerHTML = "";
+  for (let i = 0; i < 2; i++) { // duplicate for infinite scroll effect
+    const techsDiv = document.createElement("div");
+    techsDiv.className = "techs";
+    techIcons.forEach(icon => {
+      const img = document.createElement("img");
+      img.className = "icon";
+      img.src = icon.src;
+      img.alt = icon.alt;
+      techsDiv.appendChild(img);
+    });
+    techTrack.appendChild(techsDiv);
+  }
+}
+
+renderTechTrack();
 // GSAP Magnetic Slider Effect for macOS Dock-like smoothness
 // Assumes GSAP is loaded via CDN in index.html
 
